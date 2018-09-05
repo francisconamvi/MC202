@@ -16,10 +16,7 @@ Pessoa recolher_dados(FILE *arq_l){
     fscanf(arq_l, "%s", pessoa.email);
     fscanf(arq_l, "%d", &pessoa.idade);
 
-
-
     return pessoa;
-
 }
 
 int main(){
