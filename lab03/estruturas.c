@@ -23,9 +23,22 @@ Pessoa recolher_dados(FILE *arq_l){
      * a qual será adicionada no vetor postariormente*/
     Pessoa pessoa;
     fscanf(arq_l, "%ld", &pessoa.cpf);
-    fscanf(arq_l, "%s", pessoa.nome);
-    while(pessoa.nome[0] == ',') fscanf(arq_l, "%s", pessoa.nome); /*loop para evitar que o Pessoa.nome seja composto unicamente de uma virgula*/
-    fscanf(arq_l, "%s", pessoa.email);
+    for(int i=0; i<41; i++){
+        fscanf(arq_l, "%c", &pessoa.nome[i]);
+        if(pessoa.nome[i] == ',' && i!=0){
+            pessoa.nome[i+1] = '\0';
+            break;
+        }
+    }
+    
+    for(int i=0; i<31; i++){
+        fscanf(arq_l, "%c", &pessoa.email[i]);
+        if(pessoa.email[i] == ',' && i!=0){
+            pessoa.nome[i+1] = '\0';
+            break;
+        }
+    }
+    
     fscanf(arq_l, "%d", &pessoa.idade);
     return pessoa;
 }
@@ -58,9 +71,22 @@ int main(){
     ordenar(data_base, linhas); /*ordena o vetor em ordem crescente de idade e cpf, caso hajam dois com a mesma idade*/
 
     FILE *arq_w = fopen("write.txt", "w"); /*declara e abre o arquivo onde será escrito o vetor de maneira ordenada*/
-    for(int i=0; i<linhas; i++)
-        fprintf(arq_w, "%ld, %s %s %d\n", data_base[i].cpf, data_base[i].nome, data_base[i].email, data_base[i].idade); /*gravando dados do vetor no arquivo de saida*/
+    for(int i=0; i<linhas; i++){
+        fprintf(arq_w, "%ld", data_base[i].cpf);
+        for(int j=0; j<41; j++){
+            if (data_base[i].nome[j] == ',' && j!=0) break;
+            fprintf(arq_w, "%c", data_base[i].nome[j]);
+        }
+        fprintf(arq_w, ",");
+        for(int j=0; j<31; j++){
+            if (data_base[i].email[j] == ',' && j!=0) break;
+            fprintf(arq_w, "%c", data_base[i].email[j]);
+        }
+        fprintf(arq_w, ",");
+        fprintf(arq_w, "%d \n", data_base[i].idade);
+    }
     fclose(arq_w);
+    free(data_base);
 
     return 0;
 }

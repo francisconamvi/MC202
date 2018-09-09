@@ -20,7 +20,7 @@
 38835640993,XABIER,xabier@gmail.com,59 
 66140843989,ANTONIO,antonio@gmail.com,59 
 21551948070,FERNANDO,fernando@gmail.com,64 
-25706339547,IÃ‘IGO,iÃ±igo@gmail.com,68 
+25706339547,IÑIGO,iñigo@gmail.com,68 
 49614141965,JOSE,jose@gmail.com,68 
 94096675574,DANIEL,daniel@gmail.com,71 
 93523647384,ASIER,asier@gmail.com,72 
@@ -29,7 +29,7 @@
 63087558596,JESUS,jesus@gmail.com,81 
 20570511340,RUBEN,ruben@gmail.com,85 
 84738942647,JOSE MANUEL,josemanuel@gmail.com,87 
-28269060031,IÃ‘AKI,iÃ±aki@gmail.com,89 
+28269060031,IÑAKI,iñaki@gmail.com,89 
 38716891881,GORKA,gorka@gmail.com,89 
 54118761103,LUIS,luis@gmail.com,89 
 69811796216,JESUS MARIA,jesusmaria@gmail.com,93 
