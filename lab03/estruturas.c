@@ -62,6 +62,9 @@ int main(){
     FILE *arq_l = fopen("read.txt", "r"); /*declarando e abrindo arquivo para a leitura*/
     int linhas = contar_linhas(arq_l); /*guarda numa variavel o numero de linhas do arquivo de leitura*/
     rewind(arq_l); /*abre novamente o arquivo de leitura*/
+    char ene;
+    fscanf(arq_l, "%c", &ene);
+    printf("%c %s\n", -61, "Ñ");
     Pessoa *data_base = malloc(linhas*sizeof(Pessoa)); /*cria um vetor para armazenar as structs Pessoa*/
     for(int i=0; i<linhas; i++)
         data_base[i] = recolher_dados(arq_l); /*guarda em cada espaço do vetor os dados das pessoas*/
@@ -80,6 +83,7 @@ int main(){
         fprintf(arq_w, ",");
         for(int j=0; j<31; j++){
             if (data_base[i].email[j] == ',' && j!=0) break;
+            //if ()
             fprintf(arq_w, "%c", data_base[i].email[j]);
         }
         fprintf(arq_w, ",");
