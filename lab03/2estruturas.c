@@ -10,7 +10,6 @@ typedef struct {
 } Pessoa;
 
 int esqmaior(char n1[12], char n2[12]){
-    /*funcao que ira comparar os dois cpfs e dira se o da esquerda e maior*/
     for(int i=0; i<12; i++){
         if(n1[i]>n2[i]) return 1;
         else if (n1[i]<n2[i]) return 0;
@@ -32,11 +31,11 @@ void ordenar(Pessoa *vetor, int tam){
 }
 
 int main(){
-    int fim; /*variavel que indica o fim do vetor*/
+    int fim;
     Pessoa *data_base = malloc(1000*sizeof(Pessoa)); /*cria um vetor para armazenar as structs Pessoa*/
     for(int i=0; i<1000; i++){
         scanf(" %[^,],%[^,],%[^,],%d", data_base[i].cpf, data_base[i].nome, data_base[i].email, &data_base[i].idade);
-        if(data_base[i].cpf[0]==0){ /*se conteudo do cpf é vazio*/
+        if(data_base[i].cpf[0]==0){
             fim = i;
             break;
         }
@@ -45,7 +44,7 @@ int main(){
     for(int i=0; i<fim; i++){
         printf("%s, %s, %s, %d \n", data_base[i].cpf, data_base[i].nome, data_base[i].email, data_base[i].idade);
     }
-    free(data_base); /*desaloca a memoria*/
+    free(data_base);
     return 0;
 
 }
