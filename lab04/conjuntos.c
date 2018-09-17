@@ -5,19 +5,20 @@ typedef struct Lista{
     struct Lista *proximo;
 } Lista;
 
-void Insere(int num, int nconj){
-    Lista *conj;
-    Lista *paux=conj;
-    if(nconj==1) conj = conj1;
-    else conj = conj2;
+void Insere(int num, Lista **conj, Lista **aux){ 
+    Lista *temp = NULL;
+    temp.num = num;
+    *aux = *conj;
     
-    if(conj==NULL)
-        conj->proximo = num;
-    else if(num < paux->num){
-        
+    if(*conj==NULL){
+        *conj = num;
+        *temp->proximo = NULL;
+        *aux = temp;
+        return;
     }
-
-
+    else if(temp.num < (*aux).num && (*aux)->proximo == NULL){
+        *aux; //isso nao faz nada
+    }
 }
 
 int main(){
@@ -25,15 +26,19 @@ int main(){
     int num, conj;
     Lista *conj1 = NULL;
     Lista *conj2 = NULL;
+    Lista *aux;
     scanf("%c", &comando);
     if(comando=='i'){
         scanf(" %d%d", num, conj);
-        Insere(num, conj);
+        if(conj==1)
+            Insere(num, &conj1, &aux);
+        else
+            Insere(num, &conj2, &aux);
     }
-    else if(comando=='p'){ 
+    /*else if(comando=='p'){ 
         scanf(" %d%d", num, conj);
         Pertence(num, conj);
-    }
+    }*/
     
-    return 1;
+    return 0;
 }
