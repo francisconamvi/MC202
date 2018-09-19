@@ -101,7 +101,9 @@ No *Uniao(No *conj1, No *conj2, No *aux){
     }
     else if(!(pertence_bool(aux->num, conj1))) {
         No *aux2 = NULL;
-        conj1 = Insere(aux, conj1, aux2);
+        No *novo = (No*) malloc(sizeof(No));
+        *novo = *aux;
+        conj1 = Insere(novo, conj1, aux2);
     }
     return(Uniao(conj1, conj2, aux->prox));
 }
@@ -145,6 +147,10 @@ int main(){
         else if(comando=='u'){
             aux = conj2;
             conj1 = Uniao(conj1, conj2, aux);
+        }
+        else if(comando=='x'){
+            aux = conj2;
+            conj1 = Interseccao(conj1, conj2, aux);
         }
 
         imprimir_conjunto(conj1);
