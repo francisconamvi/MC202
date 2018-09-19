@@ -75,7 +75,7 @@ int pertence_bool(int num, No *aux){
         return 1;
     }
     else{
-        pertence_bool(num, aux->prox);
+        return pertence_bool(num, aux->prox);
     }
     return 0;
 }
@@ -108,7 +108,34 @@ No *Uniao(No *conj1, No *conj2, No *aux){
     return(Uniao(conj1, conj2, aux->prox));
 }
 
-//No *Interseccao(No *conj1, )
+No *Interseccao(No *inter, No *conj1, No *conj2, No *aux){
+    if(aux==NULL){
+        return inter;
+    }
+    else{
+        if(pertence_bool(aux->num, conj2)){
+            No *copia = (No*) malloc(sizeof(No));
+            *copia = *aux;
+            No *aux2 = inter;
+            inter = Insere(copia, inter, aux2);
+        }
+        return Interseccao(inter, conj1, conj2, aux->prox);
+    }
+    return inter;
+}
+
+No *Subtracao(No *conj1, No *conj2, No *aux){
+    if(aux==NULL){
+        return conj1;
+    }
+    else{
+        if(pertence_bool(aux->num, conj2)){
+            No *aux2 = conj1;
+            conj1 = Remove(aux->num, conj1, aux2);
+        }
+        return Subtracao(conj1, conj2, aux->prox);
+    }
+}
 
 
 int main(){
@@ -142,7 +169,7 @@ int main(){
                 conj1 = Remove(num, conj1, aux);
             }
             else{
-                aux = conj1;
+                aux = conj2;
                 conj2 = Remove(num, conj2, aux);
             }
         }
@@ -151,8 +178,13 @@ int main(){
             conj1 = Uniao(conj1, conj2, aux);
         }
         else if(comando=='x'){
-            aux = conj2;
-            conj1 = Interseccao(conj1, conj2, aux);
+            No *inter = NULL;
+            aux = conj1;
+            conj1 = Interseccao(inter, conj1, conj2, aux);
+        }
+        else if(comando=='b'){
+            aux = conj1;
+            conj1 = Subtracao(conj1, conj2, aux);
         }
 
         imprimir_conjunto(conj1);
