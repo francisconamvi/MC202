@@ -108,6 +108,8 @@ No *Uniao(No *conj1, No *conj2, No *aux){
     return(Uniao(conj1, conj2, aux->prox));
 }
 
+//No *Interseccao(No *conj1, )
+
 
 int main(){
     char comando;
