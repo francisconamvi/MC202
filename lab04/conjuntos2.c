@@ -95,8 +95,6 @@ void Pertence(int num, No *aux){
 
 /*Funcao que remove Noh do conj*/
 No *Remove(int num, No *conj, No *aux){
-    if(!pertence_bool(num, conj)) return conj; /*se num nao pertence ao conjunto, retorna o conjunto*/
-    
     if(aux==conj && aux->num == num){ /*Numero esta na primeira posição*/
         No *kamikaze = conj; /*No que existe soh dentro da funcao que serve so pra dar free no noh que sera destruido*/
         conj = conj->prox;
