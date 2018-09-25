@@ -159,6 +159,14 @@ No *Subtracao(No *conj1, No *conj2, No *aux){
     }
 }
 
+No *Liberar(No *conj){
+    if(conj == NULL) /*Lista ja tera sido inteiramente liberada e pode retornar NULL*/
+        return conj;
+    No *aux = conj; /*Aux que apontara para o inicio do conjunto*/
+    conj = Remove(conj->num, conj, aux); 
+    return Liberar(conj); /*Chama funcao novamente para o proximo elemento da lista (no caso o proximo eh o proprio comeco da lista)*/
+}
+
 
 int main(){
     char comando; 
@@ -216,9 +224,15 @@ int main(){
         scanf(" %c", &comando);
     }
 
+
     /*Imprime e finaliza programa*/
     imprimir_conjunto(conj1);
-    imprimir_conjunto(conj2);    
+    imprimir_conjunto(conj2);
+    
+    /*Dando free nos conjuntos antes de sair*/
+    conj1 = Liberar(conj1);
+    conj2 = Liberar(conj2);
+
 
     return 0;
 }
