@@ -104,9 +104,9 @@ No *Remove(int num, No *conj, No *aux){
         return conj;
     }
     else if(aux->prox->num == num){ /*se o proximo for o noh a ser retirado*/
-        No *aux2 = aux->prox; /*guarda o prox num auxilia*/
+        No *aux2 = aux->prox->prox; /*guarda o prox do prox num auxilia*/
         free(aux->prox); /*da free no proximo*/
-        aux->prox = aux2->prox; /*liga o atual com o proximo do proximo*/
+        aux->prox = aux2; /*liga o atual com o proximo do proximo*/
         return conj;
     }
     else{
@@ -129,8 +129,17 @@ No *Uniao(No *conj1, No *conj2, No *aux){
     return(Uniao(conj1, conj2, aux->prox)); /*Caso numero estiver no conj1, passa pro proximo da lista do conj2*/
 }
 
+No *Liberar(No *conj){
+    if(conj == NULL) /*Lista ja tera sido inteiramente liberada e pode retornar NULL*/
+        return conj;
+    No *aux = conj; /*Aux que apontara para o inicio do conjunto*/
+    conj = Remove(conj->num, conj, aux); 
+    return Liberar(conj); /*Chama funcao novamente para o proximo elemento da lista (no caso o proximo eh o proprio comeco da lista)*/
+}
+
 No *Interseccao(No *inter, No *conj1, No *conj2, No *aux){
     if(aux==NULL){ /*Na primeira chamada aux esta no conj1, se conj1 eh vazio, nao ha interseccao*/
+        conj1 = Liberar(conj1);
         return inter; 
     }
     else{
@@ -151,20 +160,13 @@ No *Subtracao(No *conj1, No *conj2, No *aux){
         return conj1;
     }
     else{
+        No *aux3 = aux->prox; /*proximo do aux, para o caso de eu ter que dar free no aux, e nao perder o ponteiro do proximo*/
         if(pertence_bool(aux->num, conj2)){ /*se num num estiver no conj2*/
             No *aux2 = conj1; /*Coloca aux2 no inicio do conj1*/
             conj1 = Remove(aux->num, conj1, aux2); /*remove o noh do conj1*/
         }
-        return Subtracao(conj1, conj2, aux->prox); /*Chama recursivamente a funcao para o proximo*/
+        return Subtracao(conj1, conj2, aux3); /*Chama recursivamente a funcao para o proximo*/
     }
-}
-
-No *Liberar(No *conj){
-    if(conj == NULL) /*Lista ja tera sido inteiramente liberada e pode retornar NULL*/
-        return conj;
-    No *aux = conj; /*Aux que apontara para o inicio do conjunto*/
-    conj = Remove(conj->num, conj, aux); 
-    return Liberar(conj); /*Chama funcao novamente para o proximo elemento da lista (no caso o proximo eh o proprio comeco da lista)*/
 }
 
 
