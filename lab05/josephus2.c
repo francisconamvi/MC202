@@ -13,20 +13,14 @@ typedef struct No{
 
 /*FUNCAO QUE IRA PRINTAR CADA NOME DA RODA*/
 void printl(No *lista, No *inicial, int sentido){
-    if(sentido && lista->prox->nome == inicial->nome){
-        printf("%s ", lista->nome);
-        return;
-    }
-    else if(!sentido && lista->ant->nome == inicial->nome){
-        printf("%s ", lista->nome);
-        return;
-    }
-    printf("%s ", lista->nome);
+    printf("%s\n", lista->nome);
     if(sentido){
-        printl(lista->prox, inicial, sentido);
+        if(lista->prox->nome != inicial->nome)
+            printl(lista->prox, inicial, sentido);
     }
     else if(!sentido){
-        printl(lista->ant, inicial, sentido);
+        if(lista->ant->nome != inicial->nome)
+            printl(lista->ant, inicial, sentido);
     }
 }
 
@@ -42,14 +36,14 @@ No *Insere_Inicial(No *novo, No *lista){
         novo->prox = lista;
         novo->ant = lista;
         lista->ant = novo;
-        return novo;
+        return lista;
     }
     else{ /*Lista com mais de um elemento*/
         novo->ant = lista->ant; 
         novo->prox = lista;
         lista->ant->prox = novo;
         lista->ant = novo;
-        return novo;
+        return lista;
     }
 
 }
@@ -62,21 +56,11 @@ No *Insere(int N, No *novo, No *lista, int sentido){
         else if(!sentido)
             lista = lista->ant;
     }
-    if(sentido){
-        novo->ant = lista->ant; 
-        novo->prox = lista;
-        lista->ant->prox = novo;
-        lista->ant = novo;
-        return novo;
-    }
-    else if(!sentido){
-        novo->ant = lista; 
-        novo->prox = lista->prox;
-        lista->prox->ant = novo;
-        lista->prox = novo;
-        return novo;
-
-    }
+    novo->ant = lista->ant; 
+    novo->prox = lista;
+    lista->ant->prox = novo;
+    lista->ant = novo;
+    return novo;
 }
 
 /*FUNCAO QUE REMOVE PESSOA DA RODA*/
@@ -106,7 +90,7 @@ No *Imprime(int N, No *lista, int sentido){
     for(int i=1; i<N; i++){
         if(sentido)
             lista = lista->prox;
-        else
+        else if(!sentido)
             lista = lista->ant;
     }
     printf("%s\n", lista->nome);
@@ -114,16 +98,6 @@ No *Imprime(int N, No *lista, int sentido){
 
 }
 
-No *naoImprime(int N, No *lista, int sentido){
-    for(int i=1; i<N; i++){
-        if(sentido)
-            lista = lista->prox;
-        else
-            lista = lista->ant;
-    }
-    return lista;
-
-}
 /*FUNCAO QUE FAZ A TROCA ENTRE DUAS PESSOAS*/
 No *troca(No *inicio, char nome1[], char nome2[]){
     No *aux1 = inicio;
@@ -177,21 +151,16 @@ int main(){
 
     char comando = nome_aux[0];
     char sinal, comando_str[21];
-    int num = atoi(nome_aux);
     int sentido = 1; /*sentido = 1 HORARIO | sentido = 0 ANTI-HORARIO*/
-    
-    /*
     printl(lista, lista, sentido);
     printf("\n");
-    */
-
+    
     while(comando != 's'){
         if(comando == 't'){
             scanf(" %s%s", nome1, nome2);
             lista = troca(lista, nome1, nome2);
         }
         else if(comando == 'm'){
-            lista = lista->ant;
             sentido = !sentido;
             scanf(" %s", comando_str);
         }
@@ -203,28 +172,21 @@ int main(){
                 for(int i=0; i<21; i++){
                     novo->nome[i] = nome_aux[i];
                 }
-                lista = Insere(num, novo, lista, sentido);
+                lista = Insere(comando-48, novo, lista, sentido);
             }
             else if(sinal=='-'){
-                lista = Remove(num, lista, sentido);
+                lista = Remove(comando-48, lista, sentido);
             }
             else if(sinal=='!'){
-                lista = Imprime(num, lista, sentido);
-                sentido = !sentido;
-                lista = naoImprime(num, lista, sentido);
-                lista = naoImprime(num, lista, sentido);
+                lista = Imprime(comando-48, lista, sentido);
             }
 
         }
         
-        /*
         printl(lista, lista, sentido);
         printf("\n");
-        */
-
         scanf(" %s", comando_str);
         comando = comando_str[0];
-        num = atoi(comando_str);
     }
     printl(lista, lista, sentido);
     printf("\n");
