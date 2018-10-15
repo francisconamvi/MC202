@@ -46,6 +46,18 @@ void print_lista(No_Lista *lista){
     print_lista(lista->prox);
 }
 
+Lista *liberar_lista(Lista *lista){
+    if(lista->inicio == NULL){
+        free(lista);
+        return lista;
+    }
+    No_Lista *novo_inicio = lista->inicio->prox;
+    free(lista->inicio);
+    lista->inicio = novo_inicio;
+    return liberar_lista(lista);
+
+}
+
 typedef struct No_Fila{
     int num; /*numero da pessoa na lista*/
     struct No_Fila *prox;
@@ -164,7 +176,7 @@ void print_pilha(Pilha **pilha){
 
 
 int main(){
-   
+
     /*Iniciando a lista, fila e pilha*/
     Lista *lista = (Lista*) malloc(sizeof(Lista));
     lista = iniciar_lista(lista);
@@ -176,7 +188,7 @@ int main(){
     for(int i=0;i<6;i++){
         pilha[i] = NULL;
     }
-    
+
     char comando[5], num_str[3], lixo; /*comando sao os QIx, QRx, SRx, P e D, num_str é o numero do comando, ou seja, o x, e lixo foi usado para capturar a virgula*/
     int num, upl; /*num eh o x, em inteiro. upl é a Ultima Posicao da Lista*/
     scanf(" %s", comando); /*Identifica qual o comando*/
@@ -223,11 +235,16 @@ int main(){
             for(int i=1;i<=num;i++){
                 pilha = desempilhar(pilha);
             }
-            
+
         }
         scanf(" %s", comando); /*recebe novo comando*/
     }
     print_lista(lista->inicio->prox); /*ao final, printar a lista*/
+    /*dando free na lista, na cabeça da fila, na fila e na pilha*/
+    lista = liberar_lista(lista);
+    free(fila->inicio);
+    free(fila);
+    free(pilha);
 
     return 0;
 }
