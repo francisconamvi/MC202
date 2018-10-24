@@ -2,38 +2,42 @@
 #include<stdlib.h>
 #define PAI(n) (n/2)
 
-typedef struct Carro{
-    float atr[3];
-}Carro;
-
-void Subir(Carro heap[], int tam){
-    if(heap[tam].v > heap[PAI(tam)]){
-        Carro aux = heap[tam];
-        heap[tam] = heap[PAI(tam)];
-        heap[PAI(tam)] = aux;
-        Subir(heap, PAI(tam));
+void trocar_vetores(float *v1, float *v2){
+    int aux;
+    for(int i=0; i<3;i++){
+        aux = v1[i];
+        v1[i] = v2[i];
+        v2[i] = aux;
     }
 }
 
-void Inserir(Carro heap[], int *tam, Carro novo){
+void Subir(float **heap, int tam, int mod){
+    if(heap[tam][mod] > heap[PAI(tam)][mod]){
+        trocar_vetores(heap[tam], heap[PAI(tam)]);
+        Subir(heap, PAI(tam), mod);
+    }
+    return;
+}
+
+void Inserir(float **heap, int *tam, float novo[], int mod){
     heap[*tam] = novo;
     (*tam)++;
-    Subir(heap, *tam);
+    Subir(heap, *tam, mod);
 }
 
 int main(){
     int IT, MC, C, P;
     scanf(" %d%d", &IT, &MC);
-    Carro *heap_a = (Carro*) malloc(MC*sizeof(Carro));
-    Carro *heap_c = (Carro*) malloc(MC*sizeof(Carro));
-    Carro *heap_v = (Carro*) malloc(MC*sizeof(Carro));
+    float **heap_a = (float**) malloc(MC*sizeof(float*));
+    float **heap_c = (float**) malloc(MC*sizeof(float*));
+    float **heap_v = (float**) malloc(MC*sizeof(float*));
     int tam_a=0, tam_c=0, tam_v=0;
     for(int i=0; i<IT; i++){
         scanf(" %d%d", &C, &P);
         for(int j=0; j<C; j++){
-            Carro novo;
-            scanf(" %f%f%f", &novo.a, &novo.c, &novo.v);
-            Inserir(heap_a, &tam_a, novo);
+            float *novo = (float*) malloc(3*sizeof(float));
+            scanf(" %f%f%f", &novo[0], &novo[1], &novo[2]);
+            Inserir(heap_a, &tam_a, novo, 0);
         }
         for(int j=0; j<P; j++){
             break;
