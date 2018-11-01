@@ -8,20 +8,28 @@
 #define PAI(n) ((n-1)/2)
 #define FILHOESQ(n) (2*n + 1)
 #define FILHODIR(n) (2*n + 2)
-#define RAIZ 0
+
+/***STRUCTS***/
+typedef struct Carro{
+    float atri[3];
+    int pos[3];
+}Carro;
+
+typedef struct Heap{
+    Carro **v;
+    int n, MC, mod;
+}Heap;
 
 /***FUNCOES***/
 void print_carro(float *v);
-void copiar_carro(float *v1, float *v2);
-int carros_iguais(float *v1, float *v2);
-void trocar_carros(float *v1, float *v2);
 int folha(int i, int n);
 int tem_filho_dir(int i, int n);
-void Subir_Heap(float **heap, int pos, int mod);
-void Descer_Heap(float **heap, int pos, int tam, int mod);
-void Inserir(float **heap, float *novo, int *tam, int mod);
-void Remover(float **heap, int *tam, int pos, int mod);
-int Buscar(float **heap, int tam, float *carro, int pos, int mod);
-void Liberar_Heap(float **heap, int max);
+Heap *criar_heap(int MC, int mod);
+void Subir_Heap(Heap *heap, int pos);
+void Descer_Heap(Heap *heap, int pos);
+void Inserir(Heap *heap, Carro *novo);
+void Remover(Heap *heap, int pos);
+void Liberar_Elementos(Heap *heap);
+void Liberar_Heap(Heap *heap);
 
 #endif
