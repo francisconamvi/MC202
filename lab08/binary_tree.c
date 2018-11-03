@@ -1,3 +1,7 @@
+/* Francisco Namias Vicente
+ * RA 216028
+ * */
+
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -61,6 +65,7 @@ int Diametro(No *arv){
     return desq;
 }
 
+/*Funcao para printar In Ordem*/
 void print_in(No *arv){
     if(arv!=NULL){
         print_in(arv->esq);
@@ -69,6 +74,7 @@ void print_in(No *arv){
     }
 }
 
+/*Funcao para printar Pre Ordem*/
 void print_pre(No *arv){
     if(arv!=NULL){
         printf("%d ", arv->num);
@@ -77,6 +83,7 @@ void print_pre(No *arv){
     }
 }
 
+/*Funcao para printar pos ordem*/
 void print_pos(No *arv){
     if(arv!=NULL){
         print_pos(arv->esq);
@@ -85,6 +92,7 @@ void print_pos(No *arv){
     }
 }
 
+/*Liberar a memoria da arvore*/
 No *Liberar(No *arv){
     if(arv->esq==NULL && arv->dir==NULL){
         free(arv);
